@@ -57,7 +57,7 @@ classroom-attendance-system/
 * **Backend:** Spring Boot (Java)
 * **Microservice:** Flask (Python)
 * **Computer Vision:** OpenCV
-* **Database:** (Specify if you used MySQL/PostgreSQL)
+* **Database:** (PostgreSQL)
 
 ---
 
