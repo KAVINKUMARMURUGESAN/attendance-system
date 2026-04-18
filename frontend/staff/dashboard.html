@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+<script>
+// 🔐 Allow only logged-in staff
+if (!localStorage.getItem("staff")) {
+    window.location.href = "../index.html";
+}
+</script>
+
+<h1 class="text-3xl font-bold mb-6">Staff Dashboard</h1>
+
+<p class="mb-4 text-gray-600">Welcome, Staff Member</p>
+
+<a href="students.html"
+   class="bg-blue-600 text-white px-4 py-2 rounded">
+   View Students
+</a>
+<a href="attendance.html" class="bg-purple-600 text-white px-4 py-2 rounded">
+    Manage Attendance
+</a>
+
+</body>
+</html>

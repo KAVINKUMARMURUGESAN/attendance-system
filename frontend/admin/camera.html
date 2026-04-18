@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Camera</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8 text-center">
+
+<h1 class="text-3xl font-bold mb-6">Live Attendance Camera</h1>
+
+<img src="http://localhost:5000/video-feed" class="mx-auto border-4 border-blue-600 rounded shadow-lg"/>
+
+<div class="mt-6 space-x-4">
+    <button onclick="startCamera()" class="bg-green-600 text-white px-4 py-2 rounded">Start Detection</button>
+    <button onclick="stopCamera()" class="bg-red-600 text-white px-4 py-2 rounded">Stop Detection</button>
+</div>
+
+<script>
+function startCamera() {
+    fetch("http://localhost:5000/start-camera");
+}
+function stopCamera() {
+    fetch("http://localhost:5000/stop-camera");
+}
+</script>
+
+</body>
+</html>

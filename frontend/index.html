@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-100 flex items-center justify-center h-screen">
+
+<div class="bg-white p-8 rounded shadow w-96">
+    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+
+    <input id="username" type="text" placeholder="Username"
+        class="w-full border p-2 mb-3 rounded">
+
+    <input id="password" type="password" placeholder="Password"
+        class="w-full border p-2 mb-3 rounded">
+
+    <select id="role" class="w-full border p-2 mb-4 rounded">
+        <option>Admin</option>
+        <option>Staff</option>
+        <option>Student</option>
+    </select>
+
+    <button onclick="login()"
+        class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+        Login
+    </button>
+</div>
+
+<script src="js/login.js"></script>
+</body>
+</html>

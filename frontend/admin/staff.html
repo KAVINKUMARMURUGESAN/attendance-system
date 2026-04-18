@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Staff</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+<h1 class="text-3xl font-bold mb-6">Manage Staff</h1>
+
+<div class="bg-white p-4 rounded shadow mb-6">
+    <input id="name" placeholder="Staff Name" class="border p-2 rounded mr-2">
+    <input id="username" placeholder="Username" class="border p-2 rounded mr-2">
+    <input id="password" placeholder="Password" type="password" class="border p-2 rounded mr-2">
+    <button onclick="addStaff()" class="bg-blue-600 text-white px-4 py-2 rounded">Add Staff</button>
+</div>
+
+<table class="w-full bg-white shadow rounded text-sm">
+    <thead class="bg-gray-200">
+        <tr>
+            <th class="p-2 border">ID</th>
+            <th class="p-2 border">Name</th>
+            <th class="p-2 border">Username</th>
+            <th class="p-2 border">Action</th>
+        </tr>
+    </thead>
+    <tbody id="staffTable"></tbody>
+</table>
+
+<script src="../js/staff-admin.js"></script>
+</body>
+</html>

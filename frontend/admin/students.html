@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Students</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+<h1 class="text-3xl font-bold mb-6">Manage Students</h1>
+
+<!-- Add Student Form -->
+<div class="bg-white p-4 rounded shadow mb-6">
+    <input id="name" placeholder="Student Name" class="border p-2 rounded mr-2">
+    <input id="regNo" placeholder="Register No" class="border p-2 rounded mr-2">
+    <input id="password" placeholder="Password" type="password" class="border p-2 rounded mr-2">
+
+    <!-- Staff Dropdown -->
+    <select id="staffSelect" class="border p-2 rounded mr-2"></select>
+
+    <button onclick="addStudent()" class="bg-blue-600 text-white px-4 py-2 rounded">
+        Add Student
+    </button>
+</div>
+
+<!-- Students Table -->
+<table class="w-full bg-white shadow rounded text-sm">
+    <thead class="bg-gray-200">
+        <tr>
+            <th class="p-2 border">ID</th>
+            <th class="p-2 border">Name</th>
+            <th class="p-2 border">Reg No</th>
+            <th class="p-2 border">Staff</th>
+            <th class="p-2 border">Actions</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+</table>
+
+<script>
+window.onload = () => {
+    loadStudents();
+    loadStaffOptions();
+};
+
+// Load all students
+function loadStudents() {
+    fetch("http://localhost:8080/api/students")
+        .then(res => res.json())
+        .then(data => {
+            const table = document.getElementById("studentTable");
+            table.innerHTML = "";
+
+            data.forEach(s => {
+                table.innerHTML += `
+                    <tr>
+                        <td class="p-2 border">${s.id}</td>
+                        <td class="p-2 border">${s.name}</td>
+                        <td class="p-2 border">${s.regNo}</td>
+                        <td class="p-2 border">${s.staff ? s.staff.name : "-"}</td>
+                        <td class="p-2 border space-x-2">
+                            <button onclick="enrollFace(${s.id})"
+                                class="bg-purple-600 text-white px-2 py-1 rounded">
+                                Enroll Face
+                            </button>
+                            <button onclick="deleteStudent(${s.id})"
+                                class="bg-red-600 text-white px-2 py-1 rounded">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        });
+}
+
+// Load staff into dropdown
+function loadStaffOptions() {
+    fetch("http://localhost:8080/api/staff")
+        .then(res => res.json())
+        .then(data => {
+            const select = document.getElementById("staffSelect");
+            select.innerHTML = "<option value=''>Select Staff</option>";
+
+            data.forEach(s => {
+                select.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+            });
+        });
+}
+
+// Add new student
+function addStudent() {
+    const name = document.getElementById("name").value;
+    const regNo = document.getElementById("regNo").value;
+    const password = document.getElementById("password").value;
+    const staffId = document.getElementById("staffSelect").value;
+
+    if (!staffId) {
+        alert("Please select staff");
+        return;
+    }
+
+    fetch("http://localhost:8080/api/students", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name,
+            regNo,
+            password,
+            staff: { id: staffId }
+        })
+    })
+    .then(() => {
+        alert("Student added");
+        loadStudents();
+    });
+}
+
+// Delete student
+function deleteStudent(id) {
+    if (!confirm("Delete this student?")) return;
+
+    fetch(`http://localhost:8080/api/students/${id}`, {
+        method: "DELETE"
+    }).then(() => loadStudents());
+}
+
+// 🎥 Enroll Face Function
+function enrollFace(studentId) {
+    localStorage.setItem("enrollStudentId", studentId);
+    window.location.href = "enroll.html"; // goes to frontend/admin/camera.html
+}
+</script>
+
+</body>
+</html>

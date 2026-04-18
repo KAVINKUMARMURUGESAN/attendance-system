@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enroll Face</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8 text-center">
+
+<h1 class="text-2xl font-bold mb-4">Face Enrollment</h1>
+
+<p class="mb-4">Student ID: <span id="studentId"></span></p>
+
+<video id="videoFeed" width="500" autoplay class="mx-auto border rounded shadow"></video>
+
+
+<div class="mt-4">
+    <button onclick="captureFace()" class="bg-green-600 text-white px-4 py-2 rounded">
+        Capture Face
+    </button>
+</div>
+
+
+<script>
+const studentId = localStorage.getItem("enrollStudentId");
+document.getElementById("studentId").innerText = studentId;
+
+const video = document.getElementById("videoFeed");
+
+// Start browser camera
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        video.srcObject = stream;
+    })
+    .catch(err => {
+        alert("Camera access denied");
+    });
+
+// Create hidden canvas
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+
+function captureFace() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = canvas.toDataURL("image/png");
+
+    fetch("http://localhost:5000/enroll", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            studentId: studentId,
+            image: imageData
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert("Face enrolled successfully!");
+        }
+    })
+    .catch(err => alert("Enrollment failed"));
+}
+</script>
+
+
+
+
+</body>
+</html>

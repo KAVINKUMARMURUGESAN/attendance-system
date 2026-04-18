@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+<script>
+if (!localStorage.getItem("staff")) {
+    window.location.href = "login.html";
+}
+</script>
+
+<h1 class="text-3xl font-bold mb-6">Students List</h1>
+
+<table class="w-full bg-white shadow rounded text-sm">
+    <thead class="bg-gray-200">
+        <tr>
+            <th class="p-2 border">ID</th>
+            <th class="p-2 border">Name</th>
+            <th class="p-2 border">Reg No</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+</table>
+
+<script src="../js/staff-students.js"></script>
+</body>
+</html>
